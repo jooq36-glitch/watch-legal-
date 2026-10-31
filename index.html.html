@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Смотри легально</title>
+<meta name="description" content="Находи, где легально посмотреть фильмы и сериалы по всему миру">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,650;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0c14;
+  --bg-raised:#17141f;
+  --bg-card:#1b1826;
+  --gold:#e4b65c;
+  --gold-dim:#8a6c33;
+  --red:#c4453f;
+  --paper:#f3ede1;
+  --muted:#9490a3;
+  --line:#2c2838;
+  --radius-lg:22px;
+  --radius-sm:10px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--paper);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,.display{font-family:'Fraunces',serif}
+.w{max-width:880px;margin:auto;padding:0 22px}
+a{color:var(--gold)}
+
+/* sprocket strip */
+.sprockets{height:18px;width:100%;background-image:radial-gradient(circle,var(--bg-raised) 3.5px,transparent 3.6px);background-size:26px 18px;background-position:center;opacity:.9}
+
+header{padding:64px 0 10px;text-align:center;position:relative;overflow:hidden}
+.kicker{display:inline-block;color:var(--gold);letter-spacing:.14em;font-size:.72rem;font-weight:600;border:1px solid var(--gold-dim);border-radius:999px;padding:6px 16px;margin-bottom:22px}
+header h1{font-size:clamp(2.3rem,7vw,3.6rem);font-weight:650;letter-spacing:-.01em;margin:0 0 14px;
+  animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+header h1 em{font-style:italic;color:var(--gold)}
+header p.sub{color:var(--muted);max-width:480px;margin:0 auto;font-size:1.02rem;
+  animation:rise .7s .1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.ticket{
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:22px;
+  position:relative;
+}
+.ticket::before,.ticket::after{
+  content:"";position:absolute;top:50%;width:26px;height:26px;background:var(--bg);
+  border-radius:50%;transform:translateY(-50%);
+}
+.ticket::before{left:-14px}
+.ticket::after{right:-14px}
+
+.search{max-width:620px;margin:34px auto 0;animation:rise .7s .2s cubic-bezier(.2,.8,.2,1) both}
+.search-row{display:flex;gap:10px;flex-wrap:wrap}
+input,select{
+  background:var(--bg-card);border:1px solid var(--line);color:var(--paper);
+  border-radius:var(--radius-sm);padding:14px 16px;font-size:1rem;font-family:inherit;
+}
+input::placeholder{color:#716d82}
+#q{flex:1;min-width:210px}
+button.primary{
+  background:var(--gold);color:#241b06;border:0;border-radius:var(--radius-sm);
+  padding:14px 24px;font-weight:700;font-size:.98rem;cursor:pointer;transition:transform .15s ease, background .15s ease;
+}
+button.primary:hover{background:#edc876;transform:translateY(-1px)}
+.note{max-width:520px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:.84rem}
+
+section{padding:36px 0}
+h2.sec-title{font-size:1.3rem;font-weight:500;margin:0 0 18px;display:flex;align-items:center;gap:10px}
+h2.sec-title::before{content:"";width:26px;height:1px;background:var(--gold-dim)}
+
+.result-item{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.result-item:hover{border-color:var(--gold-dim);transform:translateX(3px)}
+.result-item img{width:52px;height:78px;object-fit:cover;border-radius:6px;flex-shrink:0;background:var(--line)}
+.result-item b{font-size:1.02rem;font-weight:600}
+.result-item span{color:var(--muted);font-size:.84rem}
+.chev{margin-left:auto;color:var(--gold-dim);font-size:1.1rem}
+
+.group-title{
+  color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.07em;
+  margin:22px 0 10px;text-transform:uppercase;
+}
+.grid{display:flex;flex-wrap:wrap;gap:10px}
+.card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:999px;
+  padding:8px 16px 8px 8px;display:flex;align-items:center;gap:10px;
+}
+.card img{width:30px;height:30px;border-radius:7px}
+.card b{font-size:.88rem;font-weight:500}
+
+#providerResults .ticket-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+#providerResults h2{font-size:1.5rem;margin:0}
+#providerResults .deep-link{display:inline-block;margin-top:18px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold-dim);padding-bottom:2px}
+
+footer{text-align:center;padding:40px 22px 50px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line);margin-top:30px}
+
+#keyModal{position:fixed;inset:0;background:#070610e0;display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;backdrop-filter:blur(3px)}
+#keyModal .box{max-width:460px;padding:30px}
+#keyModal h2{font-size:1.4rem;margin:0 0 12px}
+#keyModal p{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+#keyModal input{width:100%}
+#keyModal button{margin-top:14px;width:100%}
+
+.loading{color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="sprockets"></div>
+
+<div id="keyModal">
+  <div class="box ticket">
+    <span class="kicker">Один раз</span>
+    <h2>Нужен бесплатный ключ TMDB</h2>
+    <p>Зайди на <a href="https://www.themoviedb.org/signup" target="_blank">themoviedb.org</a>, зарегистрируйся, в настройках открой Settings → API и скопируй API Key (v3 auth). Вставь его сюда — он сохранится только в этом браузере.</p>
+    <input id="apiKeyInput" type="text" placeholder="Вставь API ключ">
+    <button class="primary" onclick="saveKey()">Сохранить и начать</button>
+  </div>
+</div>
+
+<header><div class="w">
+  <span class="kicker">По всему миру, бесплатно и платно</span>
+  <h1>Смотри <em>легально</em></h1>
+  <p class="sub">Название на любом языке — и сайт сам находит, на каких официальных площадках это смотреть</p>
+
+  <div class="search">
+    <div class="ticket search-row">
+      <input id="q" type="text" placeholder="Interstellar, Оппенгеймер, 鬼滅の刃…">
+      <select id="country">
+        <option value="RU">Россия</option>
+        <option value="US" selected>США</option>
+        <option value="GB">Великобритания</option>
+        <option value="DE">Германия</option>
+        <option value="FR">Франция</option>
+        <option value="KG">Кыргызстан</option>
+        <option value="KZ">Казахстан</option>
+        <option value="TR">Турция</option>
+        <option value="IN">Индия</option>
+        <option value="JP">Япония</option>
+      </select>
+      <button class="primary" onclick="search()">Найти</button>
+    </div>
+  </div>
+  <p class="note">Данные о доступности — от JustWatch через открытый API TMDB. Видео здесь не хранится и не показывается, только ссылки на официальные сервисы.</p>
+</div></header>
+
+<section><div class="w">
+  <div id="searchResults"></div>
+  <div id="providerResults"></div>
+</div></section>
+
+<footer>Сайт использует открытый API TMDB (themoviedb.org) и не предоставляет прямого доступа к видео.</footer>
+
+<script>
+let API_KEY = localStorage.getItem('tmdb_key') || '';
+
+function saveKey(){
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if(!k){ alert('Вставь ключ'); return; }
+  localStorage.setItem('tmdb_key', k);
+  API_KEY = k;
+  document.getElementById('keyModal').style.display = 'none';
+}
+if(API_KEY) document.getElementById('keyModal').style.display = 'none';
+
+async function search(){
+  const q = document.getElementById('q').value.trim();
+  if(!q) return;
+  if(!API_KEY){ document.getElementById('keyModal').style.display = 'flex'; return; }
+
+  document.getElementById('providerResults').innerHTML = '';
+  const box = document.getElementById('searchResults');
+  box.innerHTML = '<p class="loading">Ищем…</p>';
+
+  try{
+    const r = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(q)}&language=ru-RU`);
+    const data = await r.json();
+    const items = (data.results || []).filter(i => i.media_type === 'movie' || i.media_type === 'tv').slice(0, 8);
+
+    if(items.length === 0){
+      box.innerHTML = '<p class="loading">Ничего не нашли, попробуй другое название.</p>';
+      return;
+    }
+
+    box.innerHTML = '<h2 class="sec-title">Результаты</h2>' + items.map(i => {
+      const title = i.title || i.name;
+      const year = (i.release_date || i.first_air_date || '').slice(0,4);
+      const poster = i.poster_path ? `https://image.tmdb.org/t/p/w92${i.poster_path}` : '';
+      return `<div class="result-item" onclick="showProviders(${i.id}, '${i.media_type}', '${title.replace(/'/g,"\\'")}')">
+        ${poster ? `<img src="${poster}">` : ''}
+        <div><b>${title}</b><br><span>${i.media_type === 'movie' ? 'Фильм' : 'Сериал'}${year ? ' · ' + year : ''}</span></div>
+        <span class="chev">→</span>
+      </div>`;
+    }).join('');
+  }catch(e){
+    box.innerHTML = '<p class="loading">Не удалось выполнить поиск. Проверь API ключ или соединение.</p>';
+  }
+}
+
+async function showProviders(id, type, title){
+  const country = document.getElementById('country').value;
+  const box = document.getElementById('providerResults');
+  box.innerHTML = '<p class="loading">Смотрим, где доступно…</p>';
+
+  try{
+    const r = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
+    const data = await r.json();
+    const info = data.results && data.results[country];
+
+    if(!info){
+      box.innerHTML = `<div class="ticket"><h2 class="display">«${title}»</h2><p style="color:var(--muted);margin-top:10px">Для выбранной страны легальных площадок не нашлось. Попробуй выбрать другую страну вверху.</p></div>`;
+      return;
+    }
+
+    const link = info.link;
+    const sections = [
+      {key:'flatrate', label:'По подписке'},
+      {key:'free', label:'Бесплатно'},
+      {key:'ads', label:'Бесплатно с рекламой'},
+      {key:'rent', label:'Взять напрокат'},
+      {key:'buy', label:'Купить'},
+    ];
+
+    let html = `<div class="ticket"><h2 class="display">«${title}»</h2>`;
+    let any = false;
+    sections.forEach(s => {
+      if(info[s.key] && info[s.key].length){
+        any = true;
+        html += `<div class="group-title">${s.label}</div><div class="grid">` +
+          info[s.key].map(p => `<div class="card"><img src="https://image.tmdb.org/t/p/w92${p.logo_path}"><b>${p.provider_name}</b></div>`).join('') +
+          '</div>';
+      }
+    });
+    if(!any){
+      html += '<p style="color:var(--muted);margin-top:10px">Площадок не нашли для этой страны.</p>';
+    } else if(link){
+      html += `<a class="deep-link" href="${link}" target="_blank">Открыть полную страницу с прямыми ссылками →</a>`;
+    }
+    html += '</div>';
+    box.innerHTML = html;
+    box.scrollIntoView({behavior:'smooth'});
+  }catch(e){
+    box.innerHTML = '<p class="loading">Не удалось получить данные о площадках.</p>';
+  }
+}
+
+document.getElementById('q').addEventListener('keydown', e => { if(e.key==='Enter') search(); });
+</script>
+</body>
+</html>
